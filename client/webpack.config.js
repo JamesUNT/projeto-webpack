@@ -24,6 +24,26 @@ module.exports = {
         use: {
           loader: 'babel-loader' //loader capaz de interpretar formatos de varios arquivos e EC6 (JS moderno)
         }
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'//ponto de esclamação indica que ele aplicará primeiro um loader depois o outro, da direitra pra esquerda
+      },
+      {
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
       }
     ]
   },
@@ -32,9 +52,11 @@ module.exports = {
 
 /*
 Por que um loader é importante ?
-O webpack so conhece JS e além disso, não reconhece alguns recursos modernos da linguagem, o que pode acabar gerando conflitos
-na hora da compilação. Por esse motivo, utilizamos um loader diferente para compilar não so JS moderno, mas outros tipos de
-estenxão como .css, .sass, .html, etc.
+  O webpack so conhece JS e além disso, não reconhece alguns recursos modernos da linguagem, o que pode acabar gerando conflitos
+  na hora da compilação. Por esse motivo, utilizamos um loader diferente para compilar não so JS moderno, mas outros tipos de
+  estenxão como .css, .sass, .html, etc.
+  Diferentes loaders podem ser requisitados quando se trata de partes específicas de arquivos, como por exemplo, as fontes nõo padrões que veem em
+  css compilado como o bootstrap usado acima.
 
 Vantagens de usar o webpack-dev-server:
 Em ambiente de desenvolvimento, o webpac-dev-server faz com que os bundles sejam criados em memoria, ou seja, seu acesso fica
