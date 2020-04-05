@@ -1,8 +1,11 @@
 const path = require('path'); //
 const babiliPlugin = require('babili-webpack-plugin'); //plugin de minificação do bundle
+const extractTextPlugin = require('extract-text-webpack-plugin'); //Plugin responsável por separal o css e js no bundle
 // const MinifyPlugin = require("babel-minify-webpack-plugin"); //outro plugin de minificação do bundle que eu estava testando
 
 let plugins = []; //arrays de plugins
+
+plugins.push(new extractTextPlugin('styles.css'));
 
 //caso o ambiente node seja de produção, adicionar plugin ao array "plugins"
 if (process.env.NODE_ENV == 'production') {
@@ -27,7 +30,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'//ponto de esclamação indica que ele aplicará primeiro um loader depois o outro, da direitra pra esquerda
+        use: extractTextPlugin.extract({ // configuração do plugin que separará o css do js
+          fallback: 'style-loader', //"caso o css-loader não carregar, carregue esse loader em seu lugar"
+          use: 'css-loader'
+        })
+        // loader: 'style-loader!css-loader'//ponto de esclamação indica que ele aplicará primeiro um loader depois o outro, da direitra pra esquerda
       },
       {
         test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
