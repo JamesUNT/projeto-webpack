@@ -1,6 +1,7 @@
 const path = require('path'); //
 const babiliPlugin = require('babili-webpack-plugin'); //plugin de minificação do bundle
 const extractTextPlugin = require('extract-text-webpack-plugin'); //Plugin responsável por separal o css e js no bundle
+const optimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); //plugin responsável por minificar o css
 // const MinifyPlugin = require("babel-minify-webpack-plugin"); //outro plugin de minificação do bundle que eu estava testando
 
 let plugins = []; //arrays de plugins
@@ -10,6 +11,14 @@ plugins.push(new extractTextPlugin('styles.css'));
 //caso o ambiente node seja de produção, adicionar plugin ao array "plugins"
 if (process.env.NODE_ENV == 'production') {
   plugins.push(new babiliPlugin());
+
+  plugins.push(new optimizeCSSAssetsPlugin({
+    cssProcessor: require('cssnano'),
+    cssProcessorOptions: {
+      discardComments: { removeAll: true }
+    },
+    canPrint: true
+  }));
 }
 
 module.exports = {
