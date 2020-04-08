@@ -4,7 +4,8 @@ import { Negociacao } from './domain/index.js';
 //Quando não referenciamos a pasta de origem do arquivo, o webpack admite que esse arquivo vem de node_modules
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css'
-
+import 'jquery/dist/jquery.js';
+import 'bootstrap/js/modal.js';
 //importando css normal
 import '../css/teste.css'
 
